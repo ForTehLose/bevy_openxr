@@ -64,7 +64,7 @@ impl CameraProjection for XrProjection {
         let far = self.projection_matrix.to_cols_array()[14]
             / (self.projection_matrix.to_cols_array()[10] + 1.0);
 
-        far
+        1000.0
     }
 
     // TODO calculate this properly
