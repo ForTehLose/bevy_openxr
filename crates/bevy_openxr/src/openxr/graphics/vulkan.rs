@@ -189,7 +189,7 @@ unsafe impl GraphicsExt for openxr::Vulkan {
             | wgpu::Features::MULTIVIEW
             | wgpu::Features::MULTI_DRAW_INDIRECT_COUNT
             | wgpu::Features::MULTI_DRAW_INDIRECT
-            | wgpu::Features::PUSH_CONSTANT;
+            | wgpu::Features::PUSH_CONSTANTS;
 
         let Some(wgpu_exposed_adapter) = wgpu_vk_instance.expose_adapter(vk_physical_device) else {
             error!("WGPU failed to provide an adapter");
@@ -260,20 +260,16 @@ unsafe impl GraphicsExt for openxr::Vulkan {
         let wgpu_instance =
             unsafe { wgpu::Instance::from_hal::<wgpu_hal::api::Vulkan>(wgpu_vk_instance) };
         let wgpu_adapter = unsafe { wgpu_instance.create_adapter_from_hal(wgpu_exposed_adapter) };
+        let mut limits = wgpu_adapter.limits();
+
+        
         let (wgpu_device, wgpu_queue) = unsafe {
             wgpu_adapter.create_device_from_hal(
                 wgpu_open_device,
                 &wgpu::DeviceDescriptor {
                     label: None,
                     required_features: wgpu_features,
-                    required_limits: wgpu::Limits {
-                        max_bind_groups: 8,
-                        max_storage_buffer_binding_size: wgpu_adapter
-                            .limits()
-                            .max_storage_buffer_binding_size,
-                        max_push_constant_size: 4,
-                        ..Default::default()
-                    },
+                    required_limits: limits,
                 },
                 None,
             )
