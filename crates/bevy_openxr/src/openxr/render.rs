@@ -285,7 +285,7 @@ fn calculate_projection(near_z: f32, fov: openxr::Fovf) -> Mat4 {
     //  symmetric perspective for debugging
      let x_fov = (fov.angle_left.abs() + fov.angle_right.abs());
      let y_fov = (fov.angle_up.abs() + fov.angle_down.abs());
-     return Mat4::perspective_infinite_reverse_rh(y_fov, x_fov / y_fov, self.near);
+     return Mat4::perspective_infinite_reverse_rh(y_fov, x_fov / y_fov, near_z );
 
     let is_vulkan_api = false; // FIXME wgpu probably abstracts this
     let far_z = -1.; //   use infinite proj
