@@ -350,7 +350,7 @@ fn calculate_projection(near_z: f32, fov: openxr::Fovf) -> Mat4 {
             [0., 0., 1., 1.],
         ]);
 
-        return  Mat4::from_cols_array(&cols);
+        return z_reversal * Mat4::from_cols_array(&cols);
     } else {
         // normal projection
         cols[0] = 2. / tan_angle_width;
