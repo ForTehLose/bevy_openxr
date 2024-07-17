@@ -283,9 +283,9 @@ pub fn update_views_render_world(
 
 fn calculate_projection(near_z: f32, fov: openxr::Fovf) -> Mat4 {
     //  symmetric perspective for debugging
-    // let x_fov = (self.fov.angle_left.abs() + self.fov.angle_right.abs());
-    // let y_fov = (self.fov.angle_up.abs() + self.fov.angle_down.abs());
-    // return Mat4::perspective_infinite_reverse_rh(y_fov, x_fov / y_fov, self.near);
+     let x_fov = (self.fov.angle_left.abs() + self.fov.angle_right.abs());
+     let y_fov = (self.fov.angle_up.abs() + self.fov.angle_down.abs());
+     return Mat4::perspective_infinite_reverse_rh(y_fov, x_fov / y_fov, self.near);
 
     let is_vulkan_api = false; // FIXME wgpu probably abstracts this
     let far_z = -1.; //   use infinite proj
